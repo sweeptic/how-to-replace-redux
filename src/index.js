@@ -9,7 +9,9 @@ import App from './App';
 // import productReducer from './store/reducers/products';
 //default export  -> ProductsProvider:  named what ever you want.
 import ProductsProvider from './context/products-context';
+import configureProductStore from './hooks-store/products-store';
 
+configureProductStore();
 
 // const rootReducer = combineReducers({
 //   shop: productReducer
@@ -19,11 +21,11 @@ import ProductsProvider from './context/products-context';
 
 ReactDOM.render(
   // <Provider store={store}>
-  <ProductsProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ProductsProvider>,
+  // <ProductsProvider>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  // </ProductsProvider>,
   // </Provider>,
   document.getElementById('root')
 );
