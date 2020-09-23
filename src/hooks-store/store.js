@@ -23,9 +23,9 @@ export const useStore = () => {
    //when ever called, useState the useStore (function) components (recreated) re-rendered.
    const setState = useState(globalState)[1]; //just updating function.
 
-   const dispatch = actionIdentifier => {
+   const dispatch = (actionIdentifier, payload) => {
       //same concept as redux
-      const newState = actions[actionIdentifier](globalState); //call action
+      const newState = actions[actionIdentifier](globalState, payload); //call action
       globalState = { ...globalState, ...newState };
 
       //re render all component with new state
