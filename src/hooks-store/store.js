@@ -19,7 +19,7 @@ let listeners = [];
 let actions = {};
 
 //every components that using this shared comp. 
-export const useStore = () => {
+export const useStore = (shouldListen = true) => {
    //when ever called, useState the useStore (function) components (recreated) re-rendered.
    const setState = useState(globalState)[1]; //just updating function.
 
@@ -36,16 +36,21 @@ export const useStore = () => {
 
    useEffect(() => {
       //all components own setState function put into global listeners array;
-      listeners.push(setState);
+
+      if (shouldListen) {
+         listeners.push(setState);
+      }
 
       //azert mivel ez egy closure, minden usestore compnak egy es ugyanaz setstate metodusa lesz.
       //ezert kell egyesevel unmountolni.
       //2. setstate ugyanaz lesz amikor a komponens mountolodik és unmountolodik.
-
-      return () => {
-         listeners = listeners.filter(li => li !== setState)
+      if (shouldListen) {
+         return () => {
+            listeners = listeners.filter(li => li !== setState)
+         }
       }
-   }, [setState]); //setState because setState never changes. 
+
+   }, [setState, shouldListen]); //setState because setState never changes. 
    //this state only run once when mount or unmount.
 
 

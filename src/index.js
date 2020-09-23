@@ -8,7 +8,7 @@ import './index.css';
 import App from './App';
 // import productReducer from './store/reducers/products';
 //default export  -> ProductsProvider:  named what ever you want.
-import ProductsProvider from './context/products-context';
+// import ProductsProvider from './context/products-context';
 import configureProductStore from './hooks-store/products-store';
 
 configureProductStore();
