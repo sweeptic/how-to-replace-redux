@@ -19,11 +19,20 @@ let listeners = [];
 let actions = {};
 
 //every components that using this shared comp. 
-const useStore = () => {
+export const useStore = () => {
    //when ever called, useState the useStore (function) components (recreated) re-rendered.
    const setState = useState(globalState)[1]; //just updating function.
 
+   const dispatch = actionIdentifier => {
+      //same concept as redux
+      const newState = actions[actionIdentifier](globalState); //call action
+      globalState = { ...globalState, ...newState };
 
+      //re render all component with new state
+      for (const listener of listeners) {
+         listener(globalState);
+      }
+   }
 
    useEffect(() => {
       //all components own setState function put into global listeners array;
@@ -40,5 +49,14 @@ const useStore = () => {
    //this state only run once when mount or unmount.
 
 
-
+   //same as the useReducer function returns
+   return [globalState, dispatch]
 };
+
+export const initStore = (userActions, initialState) => {
+   if (initialState) {
+      globalState = { ...globalState, ...initialState }
+   }
+
+   actions = { ...actions, ...userActions }
+}
