@@ -3,7 +3,8 @@ import { useState } from 'react'
 
 //context object
 export const ProductsContext = React.createContext({
-   products: []
+   products: [],
+   toggleFav: (id) => {}
 })
 
 
@@ -37,10 +38,26 @@ export default props => {
          }
       ]
 
-   const [productsList, setproductsList] = useState(initialState)
+   const [productsList, setProductsList] = useState(initialState)
+
+   const toggleFavorite = productId => {
+      setProductsList(currentProdList => {
+         const prodIndex = currentProdList.findIndex(
+            p => p.id === productId
+         );
+         const newFavStatus = !currentProdList[prodIndex].isFavorite;
+         const updatedProducts = [...currentProdList];
+         updatedProducts[prodIndex] = {
+            ...currentProdList[prodIndex],
+            isFavorite: newFavStatus
+         };
+         return updatedProducts;
+      })
+   }
 
    return (
-      <ProductsContext.Provider value={{ products: productsList }}>
+      //togglefav -> togglefavorite -> setproductlist -> productsList new state -> new 'value'
+      <ProductsContext.Provider value={{ products: productsList, toggleFav: toggleFavorite }}>
          {props.children}
       </ProductsContext.Provider>
    )
