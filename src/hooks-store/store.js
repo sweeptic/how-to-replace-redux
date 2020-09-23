@@ -23,6 +23,8 @@ const useStore = () => {
    //when ever called, useState the useStore (function) components (recreated) re-rendered.
    const setState = useState(globalState)[1]; //just updating function.
 
+
+
    useEffect(() => {
       //all components own setState function put into global listeners array;
       listeners.push(setState);
@@ -36,4 +38,7 @@ const useStore = () => {
       }
    }, [setState]); //setState because setState never changes. 
    //this state only run once when mount or unmount.
+
+
+
 };
